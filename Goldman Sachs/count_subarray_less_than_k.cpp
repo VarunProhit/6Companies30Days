@@ -11,29 +11,24 @@ class Solution{
   public:
     int countSubArrayProductLessThanK(const vector<int>& a, int n, long long k) {
         
-        long long sum=0,cnt=0,d=0,i;
+        long long sum=1,cnt=0,d=0,i;
         int ans=0;
+        
+        long long p =1,j=0;
         for(i=0;i<n;i++)
         {
-            if(sum+a[i] <k)
-            {
-               sum+=a[i]; 
-               d += 1 + cnt;
-               cnt++;
-               cout<<cnt<<" "<<d<<"\n";
-               
-            }
-            else
-            {
-                ans+=d;
-                d=cnt=1;
-                sum=a[i];
-            }
+           p*=a[i];
+           
+           while(j<i && p>=k)
+           {
+              p= p/a[j];
+               j++;
+           }
+           if(p<k)
+           {
+               ans+= ((i-j) +1);
+           }
         }
-        if(d!=0)
-        ans+=d;
-        else if(a[n-1]<k)
-        ans++;
         return ans;
     }
 };
