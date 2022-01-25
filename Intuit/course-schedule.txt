@@ -1,0 +1,48 @@
+class Solution {
+public:
+    
+    bool dfs(int i,vector<vector<int>> &vec,int arr[],vector<int> &vec2,vector<int> &vec5)
+{
+    arr[i]=1;
+    vec5[i]=1;
+    for(int j:vec[i])
+    {
+        if(!arr[j])
+        {
+            if(dfs(j,vec,arr,vec2,vec5))
+            return true;
+        }
+        else
+        {
+            if(vec5[j]==1)
+            return true;
+        }
+    }
+    vec2.insert(vec2.begin(),i);
+    vec5[i]=0;
+    return false;
+}
+    vector<int> findOrder(int n, vector<vector<int>>& vec4) {
+    vector<int> vec2;
+    vector<int> vec5(n,0);
+    int arr[n];
+    for(int i=0;i<n;i++)
+    {
+        arr[i]=0;
+    }
+    vector<vector<int>> vec(n);
+    for(vector<int> i:vec4)
+    {
+        vec[i[1]].push_back(i[0]);
+    }
+    for(int i=0;i<n;i++)
+    {
+        if(!arr[i])
+        {
+            if(dfs(i,vec,arr,vec2,vec5))
+            return {};
+        }
+    }
+    return vec2;
+    }
+};
